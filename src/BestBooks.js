@@ -68,7 +68,7 @@ class BestBooks extends React.Component {
 
       console.log(obj);
       axios
-      .post(`https://dee-11.herokuapp.com/books`)
+      .post(`https://dee-11.herokuapp.com/books`, obj)
       .then((result) => {
         return this.setState({
           books: result.data,
@@ -127,7 +127,7 @@ class BestBooks extends React.Component {
           size="lg"
           onClick={this.handleShow}
           >
-            Insert the book
+            Add the book
             </Button>
             <FormModal 
             show={this.state.show}
@@ -146,7 +146,7 @@ class BestBooks extends React.Component {
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
-                    src="https://play-lh.googleusercontent.com/DmpYQrVcldrDuz5uyATqGbNvTALsJ1Bg3fpXM0p-VsRNM19osEB9-_ByvdjSbTvZQg=w450-h300-rw"
+                    src={require("./background-react.png")}
                     alt="Slide"
                   />
                   <Carousel.Caption>
@@ -158,7 +158,7 @@ class BestBooks extends React.Component {
                       variant="light"
                       onClick={() => this.deleteBook(item._id)}
                       >
-                        Remove the Book
+                        Delete
                         </Button>
                         <Button
                         variant="outline-light"
