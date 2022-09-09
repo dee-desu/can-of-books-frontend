@@ -40,7 +40,7 @@ class FormModal extends React.Component {
               </Form.Select>
             </Form.Group>
             <Button variant="primary" type="submit">
-              Add Book Now!
+              Add a Book
             </Button>
           </Form>
         </Modal.Body>
