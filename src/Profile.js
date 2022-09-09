@@ -1,6 +1,6 @@
 // import React from "react";
 import Card from 'react-bootstrap/Card';
-import React, { Component } from 'react';
+import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 
 class Profile extends React.Component {
@@ -25,3 +25,5 @@ class Profile extends React.Component {
 
 
 export default withAuth0(Profile);
+
+// class Profile extends React.Component {
