@@ -1,10 +1,11 @@
 import React from "react";
-import Carousel from "react-bootstrap/Carousel";
 import axios from "axios";
 // import "./styles/BestBooks.css";
 import FormModal from "./FormModal";
 import UpdateModal from "./UpdateModal";
+import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
+import { withAuth0 } from '@auth0/auth0-react';
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -20,8 +21,9 @@ class BestBooks extends React.Component {
 
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
   componentDidMount = () => {
+    const { user } = this.props.auth0
     axios
-      .get("https://dee-11.herokuapp.com/books")
+      .get(`https://dee-11.herokuapp.com/books?name=${user.email}`)
       .then((result) => {
         this.setState({
           books: result.data,
@@ -57,14 +59,15 @@ class BestBooks extends React.Component {
     });
   };
 
-    addBook = (event) => {
-      event.preventDefault();
-
-      const obj = {
-        title: event.target.title.value,
-        description: event.target.description.value,
-        status: event.target.status.value
-      };
+  addBook = (event) => {
+    event.preventDefault();
+    const { user } = this.props.auth0;
+    const obj = {
+      title: event.target.title.value,
+      description: event.target.description.value,
+      status : event.target.status.value,
+      name: user.email
+    };
 
       console.log(obj);
       axios
@@ -80,8 +83,9 @@ class BestBooks extends React.Component {
       this.handleClose();
     };
     deleteBook = (id) => {
+      const { user } = this.props.auth0;
       axios
-      .delete(`https://dee-11.herokuapp.com/books/${id}`)
+      .delete(`https://dee-11.herokuapp.com/books/${id}?name=${user.email}`)
       .then((result) => {
         this.setState({
           books: result.data,
@@ -95,10 +99,12 @@ class BestBooks extends React.Component {
 
     updateBook = (event) => {
       event.preventDefault();
+      const { user } = this.props.auth0;
       let obj = {
         title: event.target.title.value,
         description: event.target.description.value,
-        status : event.target.status.value
+        status : event.target.status.value,
+        name: user.email
       }
       console.log(obj)
       const id = this.state.currentBooks._id;
@@ -191,4 +197,4 @@ class BestBooks extends React.Component {
 }
 
 
-export default BestBooks;
+export default withAuth0(BestBooks);
